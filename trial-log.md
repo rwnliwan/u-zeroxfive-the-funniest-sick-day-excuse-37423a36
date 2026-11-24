@@ -48,3 +48,13 @@ Check v1 (commit `1ddef51a4fb0315e7cce40878a50c96c4e9f6a69`, dev kit): **12 pass
 - Skipped: strategy_note, committed_secret, thinking_committed, thinking_on_task, thinking_fresh.
 
 Re-bundle as v2 and re-check after this revision; target: only `thinking_priced` still failing (until usage rows are attached).
+
+## Bundle & check results (v2 — real run, 25 Nov 01:55 WITA)
+
+Bundle v2 (`bundle-4-v2.tar.gz`, 192,572 bytes, sha256 `6e9f9fcf6d0ab3815c42d354cc70a71981d844ab7ffdb1a43701ed27edd54b95`):
+5 files packed, 1 session (44 turns, 161 lines). Still 0 usage rows attached — a subagent's row is written only once its run completes (verified in muse.db: 0 rows for this agent_id across the run; the four-prog-2 builder's agent_id holds exactly 1 row, written at its run's end).
+
+Check v2 (commit `ccb24244079157fe17c070b3481159cd721f85ea`, dev kit): **13 passed, 1 failed, 5 skipped**, 5 checked at submission.
+- Passed: competition_open, snapshot (5 files, 8,523 bytes), license_osi (MIT), entrypoint (main.ts, node22), transcripts_present, transcripts_recorded, thinking_wellformed (114 messages), thinking_in_window, thinking_reproduces (37 of 70 lines authored, 52.8%), thinking_turns (44 turns), thinking_revised (trial-log.md from 2 messages), transcripts_run_record, thinking_own_work (37 of 70 lines own work).
+- FAILED `thinking_priced` only: 0 usage rows. Fix (per the kit's own text): the top-level agent runs the SELECT with its own agent_id and this subagent's AFTER this run completes, re-bundles with `--muse-usage`, re-checks, then submits. Do NOT submit bundle v2 as-is — the kit warns the entry "will be rejected where transcripts are required".
+- Skipped: strategy_note, committed_secret, thinking_committed, thinking_on_task, thinking_fresh.
